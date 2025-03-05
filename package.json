@@ -1,0 +1,52 @@
+import React, { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+
+const SPREADSHEET_ID = "1Hw_KvVLHOyGHN4F0Pxo3VjnuRF4XXQ5D6tEw6CF0oj0";
+const SHEET_NAME = "RECEBE";
+const API_KEY = "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";
+
+const Dashboard = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`)
+      .then(response => response.json())
+      .then(result => {
+        if (result.values) {
+          setData(result.values);
+        }
+      })
+      .catch(error => console.error("Erro ao buscar dados:", error));
+  }, []);
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Dashboard de Armazenamento e AnyDesk</h1>
+      <Card>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                {data[0]?.map((header, index) => (
+                  <TableHead key={index}>{header}</TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.slice(1).map((row, rowIndex) => (
+                <TableRow key={rowIndex}>
+                  {row.map((cell, cellIndex) => (
+                    <TableCell key={cellIndex}>{cell}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default Dashboard;
