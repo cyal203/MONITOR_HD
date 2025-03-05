@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 
-const SPREADSHEET_ID = "1Hw_KvVLHOyGHN4F0Pxo3VjnuRF4XXQ5D6tEw6CF0oj0";
-const SHEET_NAME = "RECEBE";
-const API_KEY = "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";
+const SPREADSHEET_ID = process.env.REACT_APP_SPREADSHEET_ID;
+const SHEET_NAME = process.env.REACT_APP_SHEET_NAME;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
